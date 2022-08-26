@@ -11,6 +11,7 @@
   - Plotly
   - Json
   - Flask
+  Please use python 3.9 and above.
   
 ## Motivation
 
