@@ -38,7 +38,7 @@ def load_data(database_filepath):
     # load data from database 
     engine = create_engine(f'sqlite:///{database_filepath}')
     df = pd.read_sql_table("disaster_messages", con=engine)
-    df.drop(columns=['Unnamed: 0_x', 'Unnamed: 0_y'], axis=1, inplace=True)
+    df.drop(columns=['Unnamed: 0_x', 'Unnamed: 0_y'], axis=1, inplace=True) #drop the columns, it only occurs while reading from db
     X = df['message']
     Y = df.iloc[:, 4:]
     return X,Y
@@ -49,10 +49,10 @@ def tokenize(text):
     Tokenizes and lemmatizes text.
     
     Parameters:
-    text: Text to be tokenized
+    text: Raw text
     
     Returns:
-    clean_tokens: Returns cleaned tokens 
+    clean_tokens: List of clean tokens
     """
     # tokenize text
     tokens = word_tokenize(text)
@@ -99,7 +99,7 @@ def evaluate_model(model, X_test, Y_test):
     Parameters:
     model: classifier
     X_test: test dataset
-    Y_test: labels for test data in X_test
+    Y_test: labels for X_test
     
     Returns:
     Classification report for each column
@@ -115,7 +115,10 @@ def save_model(model, model_filepath):
 
 
 def main():
-    """ Builds the model, trains the model, evaluates the model, saves the model."""
+    """
+     Builds the model, trains the model, evaluates the model, saves the model.
+     Reads database_filepath and model_filepath from the console as sys args.
+    """
     if len(sys.argv) == 3:
         database_filepath, model_filepath = sys.argv[1:]
         print('Loading data...\n    DATABASE: {}'.format(database_filepath))

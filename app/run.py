@@ -19,19 +19,21 @@ def tokenize(text):
     lemmatizer = WordNetLemmatizer()
 
     clean_tokens = []
-    for tok in tokens:
-        clean_tok = lemmatizer.lemmatize(tok).lower().strip()
+    for token in tokens:
+        clean_tok = lemmatizer.lemmatize(token).lower().strip()
         clean_tokens.append(clean_tok)
 
     return clean_tokens
 
 # load data
-engine = create_engine('sqlite:///C:/Users/cihan/Desktop/ETL/data/DisasterResponse.db')
+db_path = "C:/Users/cihan/Desktop/ETL/data/DisasterResponse.db" #insert your db path
+engine = create_engine('sqlite:///'+ db_path)
 df = pd.read_sql_table('disaster_messages', engine)
 df.drop(columns=['Unnamed: 0_x', 'Unnamed: 0_y'], axis=1, inplace=True)
 
 # load model
-model = joblib.load("C:/Users/cihan/Desktop/ETL/models/classifier.pkl")
+model_path = "C:/Users/cihan/Desktop/ETL/models/classifier.pkl" #insert your model path
+model = joblib.load(model_path)
 
 
 # index webpage displays cool visuals and receives user input text for model
