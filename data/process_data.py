@@ -22,7 +22,7 @@ def load_data(messages_filepath, categories_filepath):
     messages = pd.read_csv(messages_filepath)
     categories = pd.read_csv(categories_filepath)
     # merge datasets on common id and assign to df
-    df = messages.merge(categories, how ='outer', on =['id'])
+    df = messages.merge(categories, how ='outer', on = 'id')
     return df
 
 def clean_data(df):
