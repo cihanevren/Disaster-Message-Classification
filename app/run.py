@@ -2,6 +2,8 @@ import json
 import plotly
 import pandas as pd
 
+import glob, os
+
 from nltk.stem import WordNetLemmatizer
 from nltk.tokenize import word_tokenize
 
@@ -26,14 +28,19 @@ def tokenize(text):
     return clean_tokens
 
 # load data
-db_path = "C:/Users/cihan/Desktop/ETL/data/DisasterResponse.db" #insert your db path
-engine = create_engine('sqlite:///'+ db_path)
+
+cwd = os.getcwd()
+db_path = glob.glob(cwd+'//**/*.db', recursive=True)  #find the db path 
+model_path = glob.glob(cwd+'//**/*.pkl', recursive=True) #find the model path
+
+#db_path = "C:/Users/cihan/Desktop/GIT-REPS/ETL/data/DisasterResponse.db" #insert your db path
+engine = create_engine('sqlite:///'+ db_path[0])
 df = pd.read_sql_table('disaster_messages', engine)
 df.drop(columns=['Unnamed: 0_x', 'Unnamed: 0_y'], axis=1, inplace=True)
 
 # load model
-model_path = "C:/Users/cihan/Desktop/ETL/models/classifier.pkl" #insert your model path
-model = joblib.load(model_path)
+#model_path = "C:/Users/cihan/Desktop/GIT-REPS/ETL/models/classifier.pkl" #insert your model path
+model = joblib.load(model_path[0])
 
 
 # index webpage displays cool visuals and receives user input text for model
